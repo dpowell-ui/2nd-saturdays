@@ -1,5 +1,5 @@
 ---
-title: June Round
+title: June Round Test
 date: 2026-06-13
 time: 6:00 PM
 doorsOpen: 5:30 PM

@@ -1,0 +1,17 @@
+{
+  "name": "2nd-saturdays",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "2nd Saturdays — Christian Music Songwriters Round in Spring Hill, TN",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.16.0"
+  }
+}

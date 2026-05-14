@@ -1,0 +1,38 @@
+---
+import EventRow from './EventRow.astro';
+import Icon from './Icon.astro';
+
+export interface Props {
+  events: any[];
+}
+
+const { events } = Astro.props;
+const shown = events.slice(0, 4);
+---
+
+{shown.length > 0 && (
+  <section class="relative grit section-ink">
+    <div class="container py-20 sm:py-28 relative z-10">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-10">
+        <div>
+          <div class="micro" style="color: var(--ember);">The Calendar</div>
+          <h2 class="font-slab mt-3" style="font-size: clamp(2.8rem, 6vw, 5rem); line-height: 0.92;">
+            UPCOMING<br/>
+            <span style="color: var(--ember);">ROUNDS.</span>
+          </h2>
+        </div>
+        <a href="/events" class="btn btn-bone">
+          See all rounds <Icon name="arrowUpRight" size={14} />
+        </a>
+      </div>
+
+      <div class="mt-8 rule-bone"></div>
+
+      <div>
+        {shown.map((event, i) => <EventRow event={event} index={i} />)}
+      </div>
+
+      <div class="rule-bone" style="margin-top: 0.5rem;"></div>
+    </div>
+  </section>
+)}

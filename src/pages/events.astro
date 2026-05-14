@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import EventRow from '../components/EventRow.astro';
+import Icon from '../components/Icon.astro';
+import { isUpcoming, sortByDateAsc, sortByDateDesc } from '../lib/dates';
+
+const allEvents = await getCollection('events');
+const upcoming = allEvents.filter(e => isUpcoming(e.data.date)).sort(sortByDateAsc);
+const past = allEvents.filter(e => !isUpcoming(e.data.date)).sort(sortByDateDesc);
+---
+
+<Layout
+  title="All Rounds"
+  description="Every upcoming and past round of 2nd Saturdays at Just Love Coffee Cafe in Spring Hill, Tennessee."
+>
+  <section class="relative grit section-ink" style="min-height: 80vh;">
+    <div class="container py-16 sm:py-24 relative z-10">
+      <div class="micro" style="color: var(--ember);">The Calendar // All Rounds</div>
+      <h1 class="font-slab mt-5" style="font-size: clamp(3.5rem, 11vw, 9rem); line-height: 0.85;">
+        EVERY<br/>
+        ROUND, IN<br/>
+        <span style="color: var(--ember);">ORDER.</span>
+      </h1>
+
+      <p class="font-serif italic mt-8 leading-snug" style="font-size: 1.25rem; max-width: 36rem; color: var(--bone-2);">
+        Second Saturday of every month at Just Love Coffee Cafe in Spring Hill.
+        Lineups posted about three weeks ahead.
+      </p>
+
+      <div class="mt-12 flex gap-2" id="filter-tabs">
+        <button
+          data-filter="upcoming"
+          class="font-condensed font-bold uppercase tab-active"
+          style="font-size: 0.875rem; letter-spacing: 0.16em; padding: 0.625rem 1rem; background: var(--ember); color: var(--ink); border: 2px solid var(--ember); cursor: pointer;"
+        >
+          Upcoming · {upcoming.length}
+        </button>
+        <button
+          data-filter="past"
+          class="font-condensed font-bold uppercase"
+          style="font-size: 0.875rem; letter-spacing: 0.16em; padding: 0.625rem 1rem; background: transparent; color: var(--bone); border: 2px solid var(--bone); cursor: pointer;"
+        >
+          Past · {past.length}
+        </button>
+      </div>
+
+      <div class="mt-10 rule-bone"></div>
+
+      <div id="events-upcoming">
+        {upcoming.length === 0 ? (
+          <div class="text-center py-20" style="color: var(--bone-3);">
+            <Icon name="calendar" size={32} class="mx-auto mb-4" />
+            <p class="font-slab text-2xl">NO UPCOMING ROUNDS.</p>
+          </div>
+        ) : (
+          upcoming.map((event, i) => <EventRow event={event} index={i} />)
+        )}
+      </div>
+
+      <div id="events-past" class="hidden">
+        {past.length === 0 ? (
+          <div class="text-center py-20" style="color: var(--bone-3);">
+            <Icon name="calendar" size={32} class="mx-auto mb-4" />
+            <p class="font-slab text-2xl">NO PAST ROUNDS.</p>
+          </div>
+        ) : (
+          past.map((event, i) => <EventRow event={event} index={i} />)
+        )}
+      </div>
+
+      <div class="rule-bone"></div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('#filter-tabs button');
+  const sections = {
+    upcoming: document.getElementById('events-upcoming'),
+    past:     document.getElementById('events-past'),
+  };
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const filter = tab.dataset.filter as 'upcoming' | 'past';
+
+      // toggle visible section
+      Object.entries(sections).forEach(([key, el]) => {
+        if (!el) return;
+        el.classList.toggle('hidden', key !== filter);
+      });
+
+      // restyle tabs
+      tabs.forEach(t => {
+        const active = t === tab;
+        t.style.background = active ? 'var(--ember)' : 'transparent';
+        t.style.color = active ? 'var(--ink)' : 'var(--bone)';
+        t.style.borderColor = active ? 'var(--ember)' : 'var(--bone)';
+      });
+    });
+  });
+</script>

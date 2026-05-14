@@ -1,0 +1,93 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+
+export interface Props {
+  currentPath: string;
+}
+const { currentPath } = Astro.props;
+
+const links = [
+  { href: '/',       label: 'Home',   match: ['/'] },
+  { href: '/events', label: 'Rounds', match: ['/events', '/events/'] },
+  { href: '/about',  label: 'About',  match: ['/about', '/about/'] },
+  { href: '/visit',  label: 'Visit',  match: ['/visit', '/visit/'] },
+];
+
+function isActive(matches: string[]) {
+  return matches.includes(currentPath);
+}
+---
+
+<header
+  class="sticky top-0 z-50 relative"
+  style="background: rgba(12,9,7,0.92); backdrop-filter: blur(8px); border-bottom: 2px solid var(--bone);"
+>
+  <div class="container flex items-center justify-between py-4">
+    <Logo href="/" />
+
+    <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class="font-condensed uppercase underline-grow"
+          style={`font-size: 1rem; letter-spacing: 0.18em; font-weight: 600; color: ${isActive(link.match) ? 'var(--ember)' : 'var(--bone)'};`}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/admin/"
+        class="font-condensed uppercase flex items-center gap-1.5 px-3 py-1.5"
+        style="font-size: .75rem; letter-spacing: 0.2em; border: 1px solid var(--bone-3); color: var(--bone-2);"
+      >
+        <Icon name="lock" size={11} /> Admin
+      </a>
+    </nav>
+
+    <button
+      id="mobile-menu-toggle"
+      class="md:hidden p-2"
+      style="color: var(--bone);"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <span data-icon-menu><Icon name="menu" size={22} /></span>
+      <span data-icon-close class="hidden"><Icon name="x" size={22} /></span>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu md:hidden">
+    <div class="container py-4 flex flex-col gap-3">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class="font-condensed uppercase py-2"
+          style={`font-size: 1.125rem; letter-spacing: 0.16em; color: ${isActive(link.match) ? 'var(--ember)' : 'var(--bone)'};`}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/admin/"
+        class="font-condensed uppercase py-2 flex items-center gap-2"
+        style="font-size: .875rem; letter-spacing: 0.16em; color: var(--bone-2);"
+      >
+        <Icon name="lock" size={13} /> Admin
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.querySelector('[data-icon-menu]')?.classList.toggle('hidden', open);
+      toggle.querySelector('[data-icon-close]')?.classList.toggle('hidden', !open);
+    });
+  }
+</script>

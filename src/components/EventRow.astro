@@ -1,0 +1,81 @@
+---
+import { formatDateParts } from '../lib/dates';
+
+export interface Props {
+  event: {
+    data: {
+      title: string;
+      date: string;
+      time: string;
+      doorsOpen: string;
+      artists: string[];
+      note?: string;
+    };
+  };
+  index: number;
+}
+
+const { event, index } = Astro.props;
+const d = formatDateParts(event.data.date);
+const delay = `${index * 0.06}s`;
+---
+
+<div
+  class="rise grid items-start"
+  style={`padding-top: 1.75rem; padding-bottom: 1.75rem; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1.25rem; animation-delay: ${delay}; border-bottom: 1px solid var(--line);`}
+>
+  <div style="grid-column: span 2 / span 2;">
+    <span class="font-mono text-xs" style="color: var(--bone-3);">
+      {String(index + 1).padStart(2, '0')}
+    </span>
+  </div>
+
+  <div style="grid-column: span 10 / span 10;" class="sm:hidden">
+    <div class="font-condensed font-bold tracking-widest" style="font-size: 0.875rem; color: var(--ember);">
+      {d.month} {d.year}
+    </div>
+    <div class="font-slab" style="font-size: 3rem; line-height: 0.9;">
+      {d.day}
+    </div>
+    <div class="micro" style="color: var(--bone-3); margin-top: 0.25rem;">
+      {d.weekday}.
+    </div>
+  </div>
+
+  <div class="hidden sm:block" style="grid-column: span 2 / span 2;">
+    <div class="font-condensed font-bold tracking-widest" style="font-size: 0.875rem; color: var(--ember);">
+      {d.month} {d.year}
+    </div>
+    <div class="font-slab" style="font-size: 3.75rem; line-height: 0.9; margin-top: 0.25rem;">
+      {d.day}
+    </div>
+    <div class="micro" style="color: var(--bone-3); margin-top: 0.25rem;">
+      {d.weekday}.
+    </div>
+  </div>
+
+  <div class="col-span-12 sm:col-span-7">
+    <div class="font-condensed font-bold uppercase" style="font-size: 0.875rem; letter-spacing: 0.16em; color: var(--bone-2);">
+      {event.data.title} <span style="color: var(--ember);">·</span> Round
+    </div>
+    <div class="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      {event.data.artists.map((artist, i) => (
+        <span class="font-slab leading-tight" style="font-size: 1.5rem;">
+          {artist}{i < event.data.artists.length - 1 && <span style="color: var(--ember); margin-left: 0.75rem;">/</span>}
+        </span>
+      ))}
+    </div>
+    {event.data.note && (
+      <p class="font-serif italic mt-3" style="font-size: 1rem; color: var(--bone-2);">
+        "{event.data.note}"
+      </p>
+    )}
+  </div>
+
+  <div class="col-span-12 sm:col-span-2 sm:text-right">
+    <div class="micro" style="color: var(--bone-3);">MUSIC</div>
+    <div class="font-slab text-xl mt-1">{event.data.time}</div>
+    <div class="micro" style="color: var(--bone-3); margin-top: 0.75rem;">DOORS</div>
+    <div class="font-condensed font-bold text-sm" style="color: var(--bone-2);">{event.data.doorsOpen}</div>
+  </div>
+</div>

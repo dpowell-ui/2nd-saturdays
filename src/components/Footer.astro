@@ -1,0 +1,90 @@
+---
+import Icon from './Icon.astro';
+const year = new Date().getFullYear();
+---
+
+<footer class="relative grit section-ink-2">
+  <div class="container py-20 relative z-10">
+    <div class="font-slab" style="font-size: clamp(4rem,12vw,11rem); line-height: 0.85; color: var(--bone);">
+      2ND
+    </div>
+    <div class="font-slab" style="font-size: clamp(4rem,12vw,11rem); line-height: 0.85; color: var(--ember); margin-top: -0.5rem;">
+      SATURDAYS<span style="color: var(--bone);">.</span>
+    </div>
+
+    <div class="mt-8 double-rule" style="color: var(--bone);"></div>
+
+    <div class="mt-12 grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-5">
+        <div class="eyebrow" style="color: var(--ember);">The Round</div>
+        <p class="font-serif italic mt-4 leading-snug" style="font-size: 1.25rem; max-width: 28rem; color: var(--bone-2);">
+          "A monthly Christian music writers' round in Spring Hill, Tennessee.
+          Songs first, names second."
+        </p>
+        <div class="mt-6 flex gap-2">
+          <a
+            href="https://www.instagram.com/2nd_saturdays_cmsr/"
+            target="_blank"
+            rel="noreferrer"
+            class="p-2"
+            style="border: 1px solid var(--bone-3); color: var(--bone);"
+            aria-label="Instagram"
+          >
+            <Icon name="instagram" size={15} />
+          </a>
+          <a
+            href="#"
+            class="p-2"
+            style="border: 1px solid var(--bone-3); color: var(--bone);"
+            aria-label="Facebook"
+          >
+            <Icon name="facebook" size={15} />
+          </a>
+          <a
+            href="mailto:hello@2ndsaturdays.org"
+            class="p-2"
+            style="border: 1px solid var(--bone-3); color: var(--bone);"
+            aria-label="Email"
+          >
+            <Icon name="mail" size={15} />
+          </a>
+        </div>
+      </div>
+
+      <div class="md:col-span-4">
+        <div class="eyebrow" style="color: var(--ember);">The Venue</div>
+        <div class="font-slab text-2xl mt-3">JUST LOVE</div>
+        <div class="font-slab text-2xl" style="margin-top: -0.25rem;">COFFEE CAFE</div>
+        <div class="font-mono text-xs mt-3 leading-relaxed" style="color: var(--bone-2);">
+          4816 MAIN STREET<br/>
+          SPRING HILL, TN 37174
+        </div>
+        <div class="font-condensed text-sm mt-4 uppercase tracking-wider" style="color: var(--bone-2);">
+          2nd Sat / Monthly · 6:00 PM
+        </div>
+      </div>
+
+      <div class="md:col-span-3">
+        <div class="eyebrow" style="color: var(--ember);">Pages</div>
+        <div class="mt-4 flex flex-col gap-3">
+          <a href="/" class="font-condensed uppercase underline-grow w-fit" style="font-size: 1rem; letter-spacing: 0.14em; color: var(--bone);">Home</a>
+          <a href="/events" class="font-condensed uppercase underline-grow w-fit" style="font-size: 1rem; letter-spacing: 0.14em; color: var(--bone);">All Rounds</a>
+          <a href="/about" class="font-condensed uppercase underline-grow w-fit" style="font-size: 1rem; letter-spacing: 0.14em; color: var(--bone);">About / Ministry</a>
+          <a href="/visit" class="font-condensed uppercase underline-grow w-fit" style="font-size: 1rem; letter-spacing: 0.14em; color: var(--bone);">How to Visit</a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-16 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 micro"
+      style="border-top: 1px solid var(--line); color: var(--bone-3);"
+    >
+      <div>© {year} 2nd Saturdays CMSR // A non-profit ministry.</div>
+      <div class="flex items-center gap-3">
+        <span class="diamond" style="color: var(--ember);"></span>
+        <span>Spring Hill // TN // USA</span>
+        <span class="diamond" style="color: var(--ember);"></span>
+      </div>
+    </div>
+  </div>
+</footer>

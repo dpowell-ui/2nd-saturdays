@@ -1,0 +1,18 @@
+---
+export interface Props {
+  href?: string;
+}
+const { href = '/' } = Astro.props;
+---
+
+<a href={href} class="flex items-center gap-3" style="text-decoration: none;">
+  <div class="flex flex-col" style="line-height: 1;">
+    <span class="font-slab" style="font-size: 1.7rem; line-height: 0.85; color: var(--bone);">2ND</span>
+    <span class="font-slab" style="font-size: 1.7rem; line-height: 0.85; color: var(--ember);">SAT.</span>
+  </div>
+  <div class="hidden sm:block" style="width: 1px; height: 2.25rem; background: var(--bone-3);"></div>
+  <div class="hidden sm:block">
+    <div class="micro" style="color: var(--bone-2);">EST. 2024</div>
+    <div class="micro" style="color: var(--bone-3);">SPRING HILL // TN</div>
+  </div>
+</a>

@@ -1,0 +1,48 @@
+---
+import PhotoTile from './PhotoTile.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="relative grit section-ink">
+  <div class="container py-20 sm:py-28 relative z-10">
+    <div class="flex items-end justify-between flex-wrap gap-6 mb-12">
+      <div>
+        <div class="micro" style="color: var(--ember);">From the Room</div>
+        <h2 class="font-slab mt-3" style="font-size: clamp(2.8rem, 6vw, 5rem); line-height: 0.92;">
+          ON THE<br/>
+          <span style="color: var(--ember);">STAGE.</span>
+        </h2>
+      </div>
+      <p class="font-serif italic leading-snug" style="font-size: 1.125rem; max-width: 22rem; color: var(--bone-2);">
+        A few moments from past rounds at Just Love Coffee Cafe — voices,
+        stories, and songs in a small room.
+      </p>
+    </div>
+
+    <div class="rule-bone mb-10"></div>
+
+    <div class="grid grid-cols-12 gap-4 lg:gap-6">
+      <div class="col-span-12 md:col-span-8">
+        <PhotoTile src="/photos/duo-stage.jpg" alt="Two singers performing in the round" caption="Voices in the round" aspect="4 / 3" />
+      </div>
+
+      <div class="col-span-12 md:col-span-4 grid grid-cols-2 md:grid-cols-1 gap-4 lg:gap-6">
+        <PhotoTile src="/photos/solo-denim.jpg" alt="Solo singer with acoustic guitar" caption="Solo set" aspect="1 / 1" />
+        <PhotoTile src="/photos/duo-keys.jpg" alt="Two singers, one at a keyboard" caption="Voice + keys" aspect="1 / 1" />
+      </div>
+
+      <div class="col-span-6 md:col-span-6">
+        <PhotoTile src="/photos/solo-cream.jpg" alt="Solo songwriter with acoustic guitar" caption="A song, told straight" aspect="4 / 3" />
+      </div>
+      <div class="col-span-6 md:col-span-6">
+        <PhotoTile src="/photos/solo-hoodie.jpg" alt="Young songwriter performing" caption="A young writer takes the chair" aspect="4 / 3" />
+      </div>
+    </div>
+
+    <div class="mt-12 text-center">
+      <a href="https://www.instagram.com/2nd_saturdays_cmsr/" target="_blank" rel="noreferrer" class="btn btn-bone">
+        More on Instagram <Icon name="arrowUpRight" size={14} />
+      </a>
+    </div>
+  </div>
+</section>

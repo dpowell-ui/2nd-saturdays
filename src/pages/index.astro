@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
+import FromTheRoom from '../components/FromTheRoom.astro';
+import WhatIs from '../components/WhatIs.astro';
+import UpcomingRounds from '../components/UpcomingRounds.astro';
+import HomeCTA from '../components/HomeCTA.astro';
+import { isUpcoming, sortByDateAsc } from '../lib/dates';
+
+const allEvents = await getCollection('events');
+const upcoming = allEvents
+  .filter(e => isUpcoming(e.data.date))
+  .sort(sortByDateAsc);
+const nextEvent = upcoming[0];
+---
+
+<Layout title="2nd Saturdays">
+  <Hero nextEvent={nextEvent} />
+  <Marquee />
+  <FromTheRoom />
+  <WhatIs />
+  <UpcomingRounds events={upcoming} />
+  <HomeCTA />
+</Layout>

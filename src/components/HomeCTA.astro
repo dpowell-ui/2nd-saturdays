@@ -1,0 +1,58 @@
+---
+// Mailing list section. Hook this up to Buttondown/Mailchimp later
+// by swapping the form action with the provider's embed URL.
+---
+
+<section class="relative section-paper">
+  <div class="container grit-dark relative z-10" style="padding-top: 5rem; padding-bottom: 6rem;">
+    <div class="grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-6">
+        <div class="eyebrow" style="color: var(--ember-deep);">The Mailing List</div>
+        <h2 class="font-slab mt-4" style="font-size: clamp(2.6rem, 6vw, 4.5rem); line-height: 0.92;">
+          KNOW THE<br/>
+          <span style="color: var(--ember-deep);">LINEUP</span> BEFORE<br/>
+          THE SEATS<br/>
+          FILL.
+        </h2>
+      </div>
+      <div class="md:col-span-6 flex flex-col" style="justify-content: flex-end;">
+        <p class="font-serif italic leading-snug" style="font-size: 1.25rem; color: var(--ink-3);">
+          One short note at the start of every month. The lineup, the writers,
+          the address for anyone joining us the first time. Nothing else.
+        </p>
+        <form
+          class="mt-7 flex"
+          style="border: 2px solid var(--ink); gap: 0;"
+          onsubmit="event.preventDefault(); alert('Wire this up to your email provider — see comments in HomeCTA.astro.'); return false;"
+        >
+          <input
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            required
+            style="background: var(--paper); color: var(--ink); border: none; border-right: 2px solid var(--ink);"
+          />
+          <button
+            type="submit"
+            class="btn btn-ink whitespace-nowrap"
+            style="border-color: transparent;"
+          >
+            Subscribe
+          </button>
+        </form>
+        <div class="font-mono text-xs mt-4 uppercase tracking-wider" style="color: var(--ink-3);">
+          OR FOLLOW{' '}
+          <a
+            class="underline-grow"
+            href="https://www.instagram.com/2nd_saturdays_cmsr/"
+            target="_blank"
+            rel="noreferrer"
+            style="color: var(--ember-deep);"
+          >
+            @2ND_SATURDAYS_CMSR
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

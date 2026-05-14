@@ -1,0 +1,53 @@
+# Decap CMS configuration
+# Docs: https://decapcms.org/docs/configuration-options/
+
+backend:
+  name: git-gateway
+  branch: main # change to your default branch if different
+  commit_messages:
+    create: "Add round {{slug}}"
+    update: "Update round {{slug}}"
+    delete: "Remove round {{slug}}"
+
+# Where uploaded media gets stored in the repo
+media_folder: "public/photos"
+# How the photos are referenced from the site
+public_folder: "/photos"
+
+# Show a nice site link in the admin
+site_url: https://2ndsaturdays.org # change to your real URL
+display_url: https://2ndsaturdays.org
+logo_url: /photos/duo-stage.jpg
+
+# Editorial Workflow: enable if you want a draft/review/publish flow
+# publish_mode: editorial_workflow
+
+collections:
+  - name: "events"
+    label: "Rounds"
+    label_singular: "Round"
+    description: "Manage all 2nd Saturdays rounds — upcoming and past."
+    folder: "src/content/events"
+    create: true
+    delete: true
+    slug: "{{fields.date}}-{{slug}}"
+    summary: "{{title}} — {{date | date('MMM D, YYYY')}}"
+    sortable_fields: ["date", "title"]
+    view_filters:
+      - label: "Upcoming"
+        field: date
+        pattern: '20[2-9][0-9]-' # crude filter; admin can sort by date instead
+    fields:
+      - { label: "Title", name: "title", widget: "string", default: "Monthly Round", hint: "Short name. Example: 'June Round'." }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", hint: "The Saturday this round happens." }
+      - { label: "Music starts at", name: "time", widget: "string", default: "6:00 PM" }
+      - { label: "Doors open", name: "doorsOpen", widget: "string", default: "5:30 PM" }
+      - { label: "Venue", name: "venue", widget: "string", default: "Just Love Coffee Cafe" }
+      - { label: "Address", name: "address", widget: "string", default: "4816 Main Street, Spring Hill, TN 37174" }
+      - label: "Lineup"
+        name: "artists"
+        widget: "list"
+        hint: "Drag to reorder. One artist per line."
+        default: []
+      - { label: "Note (optional)", name: "note", widget: "string", required: false, hint: "A short line that shows on the event card." }
+      - { label: "Body (optional)", name: "body", widget: "markdown", required: false, hint: "Longer description — only shows if you write something." }

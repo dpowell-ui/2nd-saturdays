@@ -1,0 +1,27 @@
+---
+const items = [
+  'WRITERS NIGHT',
+  'SPRING HILL · TN',
+  'EVERY 2ND SATURDAY',
+  'NO COVER',
+  'SACRED SONGS · TRUE STORIES',
+  'IN THE ROUND',
+  'ALL AGES',
+  'EST. 2024',
+];
+const repeated = [...items, ...items, ...items];
+---
+
+<div
+  class="overflow-hidden py-4"
+  style="background: var(--ember); color: var(--ink); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);"
+>
+  <div class="flex marquee-track whitespace-nowrap">
+    {repeated.map((item) => (
+      <span class="flex items-center font-condensed uppercase" style="font-size: 1.4rem; font-weight: 700; letter-spacing: 0.18em; gap: 1.75rem; margin: 0 1.75rem;">
+        {item}
+        <span class="star" style="color: var(--ink);"></span>
+      </span>
+    ))}
+  </div>
+</div>

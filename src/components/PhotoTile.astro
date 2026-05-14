@@ -1,0 +1,41 @@
+---
+export interface Props {
+  src: string;
+  alt?: string;
+  caption?: string;
+  class?: string;
+  shadow?: boolean;
+  aspect?: string;
+}
+
+const {
+  src,
+  alt = '',
+  caption,
+  class: className = '',
+  shadow = false,
+  aspect = '4 / 3',
+} = Astro.props;
+
+const shadowStyle = shadow ? 'box-shadow: 8px 8px 0 var(--ember);' : '';
+---
+
+<figure class={`relative ${className}`}>
+  <div
+    class="relative w-full overflow-hidden"
+    style={`border: 2px solid var(--bone); aspect-ratio: ${aspect}; ${shadowStyle}`}
+  >
+    <img
+      src={src}
+      alt={alt}
+      class="object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  {caption && (
+    <figcaption class="mt-3 micro flex items-center gap-2" style="color: var(--bone-3);">
+      <span class="star" style="color: var(--ember);"></span> {caption}
+    </figcaption>
+  )}
+</figure>

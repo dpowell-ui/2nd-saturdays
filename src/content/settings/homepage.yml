@@ -1,22 +1,19 @@
 hero:
-  eyebrow: "A Christian Music Writers' Round"
-  intro: >-
-    Once a month, a line of Christian songwriters take chairs in a Spring
+  eyebrow: A Christian Music Writers' Round
+  intro: Once a month, a line of Christian songwriters take chairs in a Spring
     Hill coffee shop — and tell the truth about their songs.
-
 marquee:
   items:
-    - text: "WRITERS NIGHT"
-    - text: "SPRING HILL · TN"
-    - text: "EVERY 2ND SATURDAY"
-    - text: "NO COVER"
-    - text: "SACRED SONGS · TRUE STORIES"
-    - text: "ONE SONG AT A TIME"
-    - text: "ALL AGES"
-    - text: "EST. 2024"
-
+    - text: WRITERS NIGHT
+    - text: SPRING HILL · TN
+    - text: EVERY 2ND SATURDAY
+    - text: NO COVER
+    - text: SACRED SONGS · TRUE STORIES
+    - text: ONE SONG AT A TIME
+    - text: ALL AGES
+    - text: EST. 2024
 format:
-  eyebrow: "The Format"
+  eyebrow: The Format
   headline: |-
     IN
     THE
@@ -29,7 +26,7 @@ format:
 
     The size of the line changes month to month — usually six or seven
     writers, sometimes more if a duet joins, fewer at Christmas. We host
-    two rounds each evening.
+    two rounds each event.
 
     Our rounds bring together Christian songwriters — independent, signed,
     local, on tour — for an evening of new songs, old ones, and the kind

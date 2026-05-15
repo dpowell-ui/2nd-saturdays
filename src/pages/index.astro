@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Marquee from '../components/Marquee.astro';
@@ -14,13 +14,16 @@ const upcoming = allEvents
   .filter(e => isUpcoming(e.data.date))
   .sort(sortByDateAsc);
 const nextEvent = upcoming[0];
+
+const homepage = await getEntry('settings', 'homepage');
+const { hero, marquee, format } = homepage.data;
 ---
 
 <Layout title="2nd Saturdays">
-  <Hero nextEvent={nextEvent} />
-  <Marquee />
+  <Hero nextEvent={nextEvent} eyebrow={hero.eyebrow} intro={hero.intro} />
+  <Marquee items={marquee.items} />
   <FromTheRoom />
-  <WhatIs />
+  <WhatIs eyebrow={format.eyebrow} headline={format.headline} body={format.body} />
   <UpcomingRounds events={upcoming} />
   <HomeCTA />
 </Layout>

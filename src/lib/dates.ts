@@ -1,9 +1,12 @@
 /**
  * Date helpers for event handling.
- * Events come in as Date objects (Astro coerces from YAML).
- * We use UTC methods so YYYY-MM-DD dates render as written,
- * regardless of the viewer's timezone.
+ * Events come in as YYYY-MM-DD strings; we parse with a noon offset
+ * so timezone shifts don't roll dates backward.
  */
+
+export function parseEventDate(iso: string): Date {
+  return new Date(iso + 'T12:00:00');
+}
 
 export interface DateParts {
   month: string;
@@ -15,37 +18,29 @@ export interface DateParts {
   full: string;
 }
 
-export function formatDateParts(date: Date): DateParts {
-  const opts = (o: Intl.DateTimeFormatOptions) =>
-    new Intl.DateTimeFormat('en-US', { ...o, timeZone: 'UTC' }).format(date);
-
+export function formatDateParts(iso: string): DateParts {
+  const d = parseEventDate(iso);
   return {
-    month:       opts({ month: 'short' }).toUpperCase(),
-    monthLong:   opts({ month: 'long'  }).toUpperCase(),
-    day:         date.getUTCDate(),
-    year:        date.getUTCFullYear(),
-    weekday:     opts({ weekday: 'short' }).toUpperCase(),
-    weekdayLong: opts({ weekday: 'long'  }).toUpperCase(),
-    full:        opts({ weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }),
+    month: d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase(),
+    monthLong: d.toLocaleDateString('en-US', { month: 'long' }).toUpperCase(),
+    day: d.getDate(),
+    year: d.getFullYear(),
+    weekday: d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(),
+    weekdayLong: d.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase(),
+    full: d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }),
   };
 }
 
-export function isUpcoming(date: Date): boolean {
+export function isUpcoming(iso: string): boolean {
   const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
-  return date.getTime() >= today.getTime();
+  today.setHours(0, 0, 0, 0);
+  return parseEventDate(iso) >= today;
 }
 
-export function sortByDateAsc(
-  a: { data: { date: Date } },
-  b: { data: { date: Date } }
-): number {
-  return a.data.date.getTime() - b.data.date.getTime();
+export function sortByDateAsc(a: { data: { date: string } }, b: { data: { date: string } }): number {
+  return parseEventDate(a.data.date).getTime() - parseEventDate(b.data.date).getTime();
 }
 
-export function sortByDateDesc(
-  a: { data: { date: Date } },
-  b: { data: { date: Date } }
-): number {
-  return b.data.date.getTime() - a.data.date.getTime();
+export function sortByDateDesc(a: { data: { date: string } }, b: { data: { date: string } }): number {
+  return parseEventDate(b.data.date).getTime() - parseEventDate(a.data.date).getTime();
 }

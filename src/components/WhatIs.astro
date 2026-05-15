@@ -1,34 +1,40 @@
+---
+export interface Props {
+  eyebrow: string;
+  headline: string;
+  body: string;
+}
+
+const { eyebrow, headline, body } = Astro.props;
+
+// Split headline on newlines so each line becomes its own visual stack line
+const headlineLines = headline.split(/\r?\n/).filter(line => line.trim().length > 0);
+
+// Split body into paragraphs on blank lines (one or more empty lines)
+const paragraphs = body.split(/\r?\n\s*\r?\n/).map(p => p.trim()).filter(Boolean);
+const firstParagraph = paragraphs[0] ?? '';
+const restParagraphs = paragraphs.slice(1);
+---
+
 <section class="relative grit-dark section-paper">
   <div class="container relative z-10" style="padding-top: 6rem; padding-bottom: 8rem;">
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
       <div class="lg:col-span-5">
-        <div class="eyebrow" style="color: var(--ember-deep);">The Format</div>
-        <h2 class="font-slab mt-5" style="font-size: clamp(3rem, 6vw, 5.5rem); line-height: 0.92;">
-          FOUR<br/>
-          <span style="color: var(--ember-deep);">CHAIRS,</span><br/>
-          ONE<br/>
-          ROOM.
+        <div class="eyebrow" style="color: var(--ember-deep);">{eyebrow}</div>
+        <h2 class="font-slab mt-5" style="font-size: clamp(2.6rem, 6vw, 5.5rem); line-height: 0.92;">
+          {headlineLines.map((line, i) => (
+            <span style="display: block;" set:text={line}></span>
+          ))}
         </h2>
       </div>
 
       <div class="lg:col-span-6 lg:col-start-7">
         <div class="rule-ink"></div>
         <div class="mt-6 space-y-5 leading-relaxed font-body" style="font-size: 1.0625rem; color: var(--ink-3);">
-          <p class="font-serif italic leading-snug" style="font-size: 1.4rem; color: var(--ink);">
-            A "writers round" is a Nashville thing. Four songwriters sit in a
-            circle and take turns — one plays the song, the others listen.
-          </p>
-          <p>
-            No band, no theatrics. Each writer says where the song came from,
-            then plays it the way they wrote it: voice and one acoustic
-            guitar. Then the chair passes left.
-          </p>
-          <p>
-            Our rounds bring together Christian songwriters — independent,
-            signed, local, on tour — for an evening of new songs, old ones,
-            and the kind of quiet conversation that only happens when the
-            lights are down and the room is leaning in.
-          </p>
+          <p class="font-serif italic leading-snug" style="font-size: 1.4rem; color: var(--ink);" set:text={firstParagraph}></p>
+          {restParagraphs.map(p => (
+            <p set:text={p}></p>
+          ))}
         </div>
 
         <div class="mt-10 grid grid-cols-3 gap-6">

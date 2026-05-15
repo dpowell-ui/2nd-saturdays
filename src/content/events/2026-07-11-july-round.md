@@ -6,7 +6,10 @@ doorsOpen: 5:30 PM
 venue: Just Love Coffee Cafe
 address: 4816 Main Street, Spring Hill, TN 37174
 artists:
-  - The Kent Curtis Family
-  - Lindsay McCaul
-  - Aaron Williams
+  - name: The Kent Curtis Family
+  - name: Lindsay McCaul
+  - name: Aaron Williams
+  - name: Sarah Macintosh
+  - name: Johnathan Bond
+  - name: Daniel Ellsworth
 ---

@@ -1,15 +1,11 @@
 ---
-const items = [
-  'WRITERS NIGHT',
-  'SPRING HILL · TN',
-  'EVERY 2ND SATURDAY',
-  'NO COVER',
-  'SACRED SONGS · TRUE STORIES',
-  'IN THE ROUND',
-  'ALL AGES',
-  'EST. 2024',
-];
-const repeated = [...items, ...items, ...items];
+export interface Props {
+  items: { text: string }[];
+}
+const { items } = Astro.props;
+const safeItems = items && items.length ? items.map(i => i.text) : ['2ND SATURDAYS'];
+// Repeat the list to fill the marquee track for seamless loop
+const repeated = [...safeItems, ...safeItems, ...safeItems];
 ---
 
 <div

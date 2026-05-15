@@ -3,51 +3,158 @@
 
 backend:
   name: git-gateway
-  branch: main # change to your default branch if different
+  branch: main
   commit_messages:
     create: "Add round {{slug}}"
     update: "Update round {{slug}}"
     delete: "Remove round {{slug}}"
+    uploadMedia: "Upload {{path}}"
+    deleteMedia: "Delete {{path}}"
 
-# Where uploaded media gets stored in the repo
 media_folder: "public/photos"
-# How the photos are referenced from the site
 public_folder: "/photos"
 
-# Show a nice site link in the admin
-site_url: https://2ndsaturdays.org # change to your real URL
-display_url: https://2ndsaturdays.org
-logo_url: /photos/duo-stage.jpg
-
-# Editorial Workflow: enable if you want a draft/review/publish flow
-# publish_mode: editorial_workflow
+site_url: https://2nd-saturdays.netlify.app
+display_url: https://2nd-saturdays.netlify.app
 
 collections:
+  # ────────────────────────────────────────────────────────────────────
+  #  Rounds
+  # ────────────────────────────────────────────────────────────────────
   - name: "events"
     label: "Rounds"
     label_singular: "Round"
-    description: "Manage all 2nd Saturdays rounds — upcoming and past."
+    description: "Add or edit upcoming and past rounds."
     folder: "src/content/events"
     create: true
     delete: true
     slug: "{{fields.date}}-{{slug}}"
     summary: "{{title}} — {{date | date('MMM D, YYYY')}}"
     sortable_fields: ["date", "title"]
-    view_filters:
-      - label: "Upcoming"
-        field: date
-        pattern: '20[2-9][0-9]-' # crude filter; admin can sort by date instead
     fields:
-      - { label: "Title", name: "title", widget: "string", default: "Monthly Round", hint: "Short name. Example: 'June Round'." }
-      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", hint: "The Saturday this round happens." }
-      - { label: "Music starts at", name: "time", widget: "string", default: "6:00 PM" }
-      - { label: "Doors open", name: "doorsOpen", widget: "string", default: "5:30 PM" }
-      - { label: "Venue", name: "venue", widget: "string", default: "Just Love Coffee Cafe" }
-      - { label: "Address", name: "address", widget: "string", default: "4816 Main Street, Spring Hill, TN 37174" }
-      - label: "Lineup"
+      - {
+          label: "Title",
+          name: "title",
+          widget: "string",
+          default: "Monthly Round",
+          hint: "Short name. Example: 'June Round'."
+        }
+      - {
+          label: "Date",
+          name: "date",
+          widget: "datetime",
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+          format: "YYYY-MM-DD",
+          hint: "The Saturday this round happens."
+        }
+      - {
+          label: "Music starts at",
+          name: "time",
+          widget: "string",
+          default: "6:00 PM"
+        }
+      - {
+          label: "Doors open",
+          name: "doorsOpen",
+          widget: "string",
+          default: "5:30 PM"
+        }
+      - {
+          label: "Venue",
+          name: "venue",
+          widget: "string",
+          default: "Just Love Coffee Cafe"
+        }
+      - {
+          label: "Address",
+          name: "address",
+          widget: "string",
+          default: "4816 Main Street, Spring Hill, TN 37174"
+        }
+      - {
+          label: "Headliner (optional)",
+          name: "headliner",
+          widget: "string",
+          required: false,
+          hint: "The featured artist for this round. Leave blank if there is no headliner."
+        }
+      - label: "Other Artists / The Line"
         name: "artists"
         widget: "list"
-        hint: "Drag to reorder. One artist per line."
+        required: false
         default: []
-      - { label: "Note (optional)", name: "note", widget: "string", required: false, hint: "A short line that shows on the event card." }
-      - { label: "Body (optional)", name: "body", widget: "markdown", required: false, hint: "Longer description — only shows if you write something." }
+        summary: "{{fields.name}}"
+        hint: "Click '+ Add other artist' to add each writer in the line. Drag to reorder."
+        label_singular: "Other artist"
+        field: { label: "Name", name: "name", widget: "string" }
+      - {
+          label: "Note (optional)",
+          name: "note",
+          widget: "string",
+          required: false,
+          hint: "A short line that appears under the lineup on the event card."
+        }
+
+  # ────────────────────────────────────────────────────────────────────
+  #  Site Content
+  # ────────────────────────────────────────────────────────────────────
+  - name: "settings"
+    label: "Site Content"
+    description: "Edit the words on each page."
+    files:
+      - name: "homepage"
+        label: "Home Page"
+        file: "src/content/settings/homepage.yml"
+        description: "The home page sections: hero, scrolling banner, and the format explanation."
+        fields:
+          - label: "Hero (top of page)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {
+                  label: "Eyebrow label",
+                  name: "eyebrow",
+                  widget: "string",
+                  hint: "The small yellow line above the 2ND SAT. headline."
+                }
+              - {
+                  label: "Intro paragraph",
+                  name: "intro",
+                  widget: "text",
+                  hint: "The italic paragraph below the headline."
+                }
+          - label: "Banner / Scrolling Marquee"
+            name: "marquee"
+            widget: "object"
+            fields:
+              - label: "Banner items"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.text}}"
+                hint: "Each item shows in the yellow scrolling banner. Click '+ Add' to add another."
+                label_singular: "Banner item"
+                field: { label: "Text", name: "text", widget: "string" }
+          - label: "Format Section"
+            name: "format"
+            widget: "object"
+            hint: "The 'how it works' explanation below the banner."
+            fields:
+              - {
+                  label: "Eyebrow label",
+                  name: "eyebrow",
+                  widget: "string",
+                  hint: "Small label above the big headline. Example: 'The Format'."
+                }
+              - {
+                  label: "Big headline",
+                  name: "headline",
+                  widget: "text",
+                  hint: "Press Enter to break the headline into multiple lines."
+                }
+              - {
+                  label: "Body text",
+                  name: "body",
+                  widget: "markdown",
+                  hint: "The explanation paragraphs. Each blank line creates a new paragraph."
+                }
